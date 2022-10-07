@@ -1,0 +1,117 @@
+
+#meter_location {
+    width: 100%;
+}
+
+.load_profile_info {
+    padding: 2% 5% 2% 2%;
+    margin-bottom: 5%;
+    display: inline-block;
+    width: 80%;
+}
+
+#add_load_profile {
+    background-color: #fff;
+    border: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+#add_icon {
+    font-size: 1.6rem;
+}
+
+#info_btn {
+    background-color: #fff;
+    border: none;
+}
+
+#help_icon {
+    font-size: 1.25rem;
+}
+
+#sample_load_profile {
+    font-size: 0.8rem;
+}
+
+.info_popup-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    width: 20%;
+    background-color: #eaeaea;
+    padding: 5px;
+    border: 1px solid #757575;
+}
+.info_popup-arrow {
+    color: rgb(255, 255, 255);
+}
+
+[role='tooltip'].info_popup-content {
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+  
+.info_popup-overlay {
+    background: rgba(255, 255, 255, 0);
+}
+
+[data-popup='tooltip'].info_popup-overlay {
+    background: transparent;
+}
+
+.info_dialog_text {
+    font-size: 0.75rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+#annual_usage {
+    text-align: center;
+    font-weight: bold;
+}
+
+#energy_bill_table {
+    width: 100%;
+}
+
+#energy_bill_table th {
+    background-color: #5cf0aa;
+    border: 1px solid black;
+    text-align: center;
+}
+
+#energy_bill_table td {
+    border: 1px solid black;
+    text-align: center;
+    padding: 2% 0%;
+}
+
+#bill_days, #bill_consumption {
+    background-color: #eaeaea;
+    width: 50%;
+}
+
+#start_date, #end_date {
+    background-color: #eaeaea;
+    width: 31%;
+    margin-right: 10px;
+}
+
+#energy_bill_table #delete_bill_row {
+    border: none;
+}
+
+#delete_bill_btn {
+    background-color: #fff;
+    border: none;
+}
+
+#add_bill {
+    font-size: 0.8rem;
+    background-color: #fff;
+    border: none;
+    text-align: left;
+    width: fit-content;
+}

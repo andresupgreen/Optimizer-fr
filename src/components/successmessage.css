@@ -1,0 +1,12 @@
+#success_message_page {
+    margin-top: 5%;
+    text-align: center;
+}
+
+#success_page_btn {
+    background-color: #fff;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+}
+

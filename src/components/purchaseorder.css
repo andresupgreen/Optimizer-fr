@@ -1,0 +1,44 @@
+.customize_design_table {
+    text-align: center;
+}
+
+.customize_design_table th {
+    border-bottom: solid 1px #000;
+    background-color: #c2bfbf;
+    padding: 1% 1%;
+}
+
+.customize_design_table td {
+    border: solid 1px #000;
+    padding: 5px 5px;
+}
+
+.product_name {
+    background-color: #5cf0aa;
+    font-weight: bold;
+}
+
+.static_col {
+    background-color: #EAEAEA;
+}
+
+.customize_design_dropdown {
+    padding: 1% 5px;
+    width: 12rem;
+    text-align: center;
+    border: none;
+}
+
+.customize_design_input {
+    width: 5rem;
+}
+
+.delete_product_btn {
+    border: none;
+    background-color: #fff;
+    width: 1rem;
+}
+
+.customize_design_table td:last-child {
+    border: none;
+}

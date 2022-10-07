@@ -1,0 +1,16 @@
+#existing_electricity_rate {
+    width: 50%;
+    text-overflow: ellipsis;
+}
+
+#fixed_charge, #comp_rate {
+    width: 40%;
+    padding-right: 0%;
+}
+
+#fixed_charge_dropdown {
+    padding: 10px 0px 10px 0px;
+    margin-left: 5px;
+    border: none;
+    outline: none;
+}

@@ -1,0 +1,22 @@
+.step_progress_content {
+    margin-top: 2.5%;
+}
+
+.step_progress_primary {
+    background-color: #5cf0aa;
+    color: #000;
+    
+}
+
+.step_progress_primary:hover {
+    background-color: #5cf0aa;
+}
+
+.step_progress_secondary {
+    background-color: #5cf0aa;
+    color: #000;
+}
+
+.step_progress_secondary:hover {
+    background-color: #5cf0aa;
+}

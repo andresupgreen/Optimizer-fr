@@ -1,0 +1,17 @@
+#registration_success_page {
+  min-height: 82.5vh;
+  background-color: #EAEAEA;
+
+}
+
+#registration_success_message {
+  margin-left: 20%;
+}
+
+#registration_success_title {
+  margin-top: 5%;
+}
+
+#registration_success_text {
+  font-size: larger;
+}

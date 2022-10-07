@@ -1,0 +1,21 @@
+#page_footer {
+    background-color: #eaeaea;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 2.5% 2.5% 4.5% 5.5%;
+}
+
+#instagram_icon {
+    display: inline-block;
+}
+
+#copyright_section {
+    float: right;
+}
+
+#copyright_icon {
+    display: inline-block;
+}
+
+#copyright {
+    display: inline-block;
+}

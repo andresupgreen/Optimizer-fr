@@ -1,0 +1,126 @@
+.create_project_subheader {
+    background-color: #bbbbbb;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    margin-bottom: 1%;
+}
+
+#save_btn {
+    background-color: #5cf0aa;
+    border: 1px solid #fff;
+    padding: 0.5% 3.5%;
+}
+
+.right_col_header {
+    text-align: right;
+}
+
+.center_items {
+    text-align: center;
+}
+
+.left_padding {
+    padding-left: 5%;
+}
+
+.bottom_margin {
+    margin-bottom: 2%;
+}
+
+.inline_block {
+    display: inline-block;
+}
+
+h5 {
+    margin-bottom: 3%;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+}
+
+.basic_info {
+    padding: 10px 5% 10px 2%;
+    margin-bottom: 5%;
+    display: inline-block;
+}
+
+#customer {
+    width: 50%;
+}
+
+#add_customer_icon {
+    background-color: #fff;
+    border: none;
+    display: inline-block;
+}
+
+.popup-content {
+    background-color: #EAEAEA;
+    padding: 2%;
+    width: 40%;
+}
+
+.popup_table {
+    display: table;
+}
+
+.popup_cells {
+    display: table-cell;
+    width: 30%;
+}
+
+#save_btn_popup {
+    margin-top: 5%;
+    margin-right: 10%;
+    background-color: #5cf0aa;
+    padding: 1% 10%;
+}
+
+#cancel_btn {
+    padding: 1% 10%;
+}
+
+#search_location {
+    width: 45%;
+    padding: 1% 5% 1% 2%;
+    border: 1px solid;
+}
+
+#search_location_btn {
+    background-color: #5cf0aa;
+    width: 5%;
+    padding: 1%;
+    border: 1px solid;
+}
+
+.grid_btn {
+    background-color: #EAEAEA;
+    border: solid 1px #000;
+    padding: 2% 4%;
+}
+
+.grid_btn:focus {
+    background-color: #5cf0aa;
+}
+
+#centralized, #decentralized {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 2%;
+    display: inline;
+}
+
+.stepper_input {
+    padding: 2% 0% 2% 2%;
+    width: 40%;
+}
+
+#export_grid_checkbox, #step_transformer_checkbox {
+    width: 20px;
+    height: 20px;
+}
+

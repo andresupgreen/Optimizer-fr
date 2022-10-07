@@ -1,0 +1,73 @@
+#register_page {
+    background-color: #EAEAEA;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.registration_subheading {
+    font-weight: bold;
+}
+
+.personal_info_label {
+    background-color: #000;
+    border: 1px solid #000;
+    color: #5cf0aa;
+    padding: 2% 3% 1.5% 3%;
+    margin-right: 0px;
+    width: 40%;
+}
+
+.personal_info_input {
+    width: 50%;
+    margin-left: 0%;
+}
+
+#password_section {
+    position: relative;
+}
+
+.visible_icon {
+    background-color: #fff;
+    border: none;
+    position: absolute;
+    top: 17%;
+    right: 12%;
+}
+
+.registration_checkbox {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 10px;
+    vertical-align: middle;
+    accent-color: #757575;
+}
+
+.company_activity_label {
+    margin-right: 5%;
+}
+
+#company_website, #company_email {
+    width: 75%;
+}
+
+#company_country, #company_state, #company_business_number, #personal_country, #personal_state {
+    width: 60%;
+}
+
+.terms_conditions_section {
+    margin-left: 20%;
+}
+
+#terms_conditions_checkbox {
+    margin-top: 5%;
+}
+
+#create_designer_btn {
+    background-color: #5cf0aa;
+    font-weight: bold;
+    padding: 0.75% 2%;
+    margin-left: 21%;
+    border-radius: 5px;
+    border: none;
+    align-items: center;
+}
