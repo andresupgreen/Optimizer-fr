@@ -280,7 +280,7 @@ export const CreateSupplierAccount = () => {
   const verifyEmail = async (email) => {
     let isEmailValid = false; 
 
-    await fetch(`https://api.hunter.io/v2/email-verifier?email=${email}&api_key=fea168b681705bcdc569130ab1c64290981f30bd`)
+    await fetch(`https://api.hunter.io/v2/email-verifier?email=${email}&api_key=21bd7b0f2e645a2f2329cf71834a6cfc3b4fdc4c`)
     .then(response => response.json())
     .then(data => {
       if (data.data.status === 'valid') {
@@ -314,8 +314,8 @@ export const CreateSupplierAccount = () => {
     }
     else {
       try {
-        const responsePersonalInfo = addNewUser(personalInformation, 'users');
-        const responseCompanyInfo = addNewUser(companyInformation, 'companies');
+        addNewUser(personalInformation, 'users');
+        addNewUser(companyInformation, 'companies');
 
         // Redirect to success page on successful registration
         navigate('/register/success');
