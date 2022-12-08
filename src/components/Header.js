@@ -65,18 +65,9 @@ export const Header = (props) => {
           <Row>
             <Col id='left_col_header'>
               <img src={Logo} alt='Upgreen logo' id='logo' onClick={goToDashboard}/>
-              <Input
-                id='search_input'
-                placeholder={t('search_products_header')}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon id='search_icon'/>
-                  </InputAdornment>
-                }
-              />
             </Col>
             <Col id='right_col_header'>
-              <div className='header_dropdown'>
+              {props.userData.creationRights === 'TRUE' && <div className='header_dropdown'>
                 <button id='add_btn_header'><AddCircleOutlineIcon id='header_add_icon'/>{t('create')}</button>
                 <div className='dropdown_content'>
                   <button onClick={createProject}>New Project</button>
@@ -84,7 +75,7 @@ export const Header = (props) => {
                   <button onClick={createProject}>New Load Profile</button>
                   <button onClick={createProject}>New Product</button>
                 </div>
-              </div>
+              </div>}
               <NotificationsIcon id='notification_icon' />
               <PersonIcon id='user_icon'/>
               <p id='user_name'>{props.firstName} {props.lastName}</p>
@@ -106,15 +97,6 @@ export const Header = (props) => {
           <Row>
             <Col id='left_col_header'>
               <img src={Logo} alt='Upgreen logo' id='logo' onClick={goToHomepage}/>
-              <Input
-              id='search_input'
-              placeholder={t('search_products_header')}
-              startAdornment={
-                <InputAdornment position="start">
-                  <SearchIcon id='search_icon'/>
-                </InputAdornment>
-              }
-              />  
             </Col>
             <Col id='right_col_header'>
               <button id='login_btn_header' onClick={onLoginHeader}>{t('login')}</button>

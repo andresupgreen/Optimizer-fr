@@ -1,0 +1,13 @@
+#invite_customer_btn {
+    background-color: #b4b4b4;
+    padding: 0.5% 1%;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.more_info_btn {
+    background-color: #5cf0aa;
+    border: none;
+    padding: 5% 12%;
+    border-radius: 5px;
+}
