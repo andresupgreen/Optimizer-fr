@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { ManageContext } from '../index.js';
 
 import './registrationmessage.css';
 
 export const RegistrationMessage = () => {
-  const { accountType, registrationCompanyName } = useContext(ManageContext);
+  const { accountType } = useContext(ManageContext);
 
   return (
     <Container fluid id='registration_success_page'>

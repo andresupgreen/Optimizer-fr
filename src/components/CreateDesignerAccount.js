@@ -288,8 +288,8 @@ export const CreateDesignerAccount = () => {
     }
     else {
       try {
-        const responsePersonalInfo = addNewUser(personalInformation, 'users');
-        const responseCompanyInfo = addNewUser(companyInformation, 'companies');
+        addNewUser(personalInformation, 'users');
+        addNewUser(companyInformation, 'companies');
 
         // Redirect to success page on successful registration
         navigate('/register/success');
