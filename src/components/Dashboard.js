@@ -48,12 +48,7 @@ export const Dashboard = (props) => {
 
   // Redirect to create project page
   const createProject = () => {
-    if (props.userData.creationRights === 'TRUE') {
-      navigate("/dashboard/create-project");
-    }
-    else {
-      alert('Access Denied: This feature requires creation rights');
-    }
+    navigate("/dashboard/create-project");
   }
   
   return (

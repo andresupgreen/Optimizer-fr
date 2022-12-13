@@ -23,6 +23,7 @@ import { RegistrationMessage } from './components/RegistrationMessage';
 import { SupplierDashboard } from './components/SupplierDashboard';
 import { SupplierProducts } from './components/SupplierProducts';
 import { UpdateSupplierProducts } from './components/UpdateSupplierProducts';
+import { UploadProductSuccess } from './components/UploadProductSuccess';
 
 export const ManageContext = createContext();
 
@@ -470,6 +471,7 @@ const App = () => {
               <Route path="/dashboard/create-project/success" element={<SuccessMessage />}></Route>
               <Route path="/dashboard/products/existing" element={<SupplierProducts productData={productData} />}></Route>
               <Route path="/dashboard/products/update" element={<UpdateSupplierProducts />}></Route>
+              <Route path="/dashboard/products/update/success" element={<UploadProductSuccess />}></Route>
             </Routes>
             
             <Footer />

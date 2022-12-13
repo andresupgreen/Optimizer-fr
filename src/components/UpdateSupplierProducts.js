@@ -309,7 +309,7 @@ export const UpdateSupplierProducts = () => {
       body: JSON.stringify(data)
     };
     const response = await fetch(`/api/v1/${category}`, requestOptions);
-    console.log(response);
+    return response;
   };
 
   const handleSubmit = async (event) => {
@@ -319,11 +319,17 @@ export const UpdateSupplierProducts = () => {
     }
     else {
       // Update warehouse data
-      await addSupplierData('warehouses', processedWarehouseData);
-
+      const saveWarehouseData = await addSupplierData('warehouses', processedWarehouseData);
+    
       // Update product data 
-      await addSupplierData('products', processedProductData);
-      alert('SUCCESSFUL UPLOAD!');
+      const saveProductData = await addSupplierData('products', processedProductData);
+      
+      if (saveWarehouseData.status === 200 && saveProductData.status === 200) {
+        navigate('/dashboard/products/update/success');
+      }
+      else {
+        alert('Unable to update price list. Please try again');
+      }
     }
   };
 

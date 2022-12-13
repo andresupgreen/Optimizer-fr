@@ -1,12 +1,19 @@
 #success_message_page {
     margin-top: 5%;
     text-align: center;
+    min-height: 82.5vh;
 }
 
-#success_page_btn {
+.success_page_div {
+    margin-top: 5%;
+    margin-right: 5%;
+}
+
+.success_page_btn {
     background-color: #fff;
     border: none;
-    color: blue;
-    text-decoration: underline;
+    font-size: larger;
+    font-weight: 600;
+    padding: 10px 10px;
 }
 
