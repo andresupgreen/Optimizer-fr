@@ -90,6 +90,21 @@ export const SideMenu = () => {
               ],
             },
             {
+              title: 'Purchases',
+              itemId: 5, 
+              elemBefore: () => <img src={cost_icon} alt='money symbol' className='menu_icons'/>,
+              subNav: [
+                {
+                  title: 'In Process',
+                  itemId: '/dashboard/purchases/in-process',
+                },
+                {
+                  title: 'Purchase History',
+                  itemId: '/dashboard/purchases/history',
+                },
+              ],
+            },
+            {
               title: t('incentives'),
               itemId: 4, 
               elemBefore: () => <img src={cost_icon} alt='money symbol' className='menu_icons'/>,

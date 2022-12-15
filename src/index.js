@@ -16,6 +16,7 @@ import duplicate_icon from './assets/duplicate-icon.png';
 import design_icon from './assets/design-icon.png';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import DownloadIcon from '@mui/icons-material/Download';
 
 import './index.css';
 import './i18n';
@@ -24,6 +25,7 @@ import { SupplierDashboard } from './components/SupplierDashboard';
 import { SupplierProducts } from './components/SupplierProducts';
 import { UpdateSupplierProducts } from './components/UpdateSupplierProducts';
 import { UploadProductSuccess } from './components/UploadProductSuccess';
+import { Purchases } from './components/Purchases';
 
 export const ManageContext = createContext();
 
@@ -38,6 +40,32 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [projectData,setProjectData] = useState([]);
   const [productData, setProductData] = useState([]);
+  const [purchaseOrderData, setPurchaseOrderData] = useState([
+    {
+      submissionDate: '08/20/2022',
+      purchaseOrderNumber: 'LUM20220820',
+      projectName: '1235 Jane Ave - Grid Tie with Backup',
+      supplier: 'Solar Supplier ABC',
+      status: 'Delivered',
+      totalCost: '$ 38,408',
+    },
+    {
+      submissionDate: '04/14/2022',
+      purchaseOrderNumber: 'LUM20220414',
+      projectName: '4800 Yonge Street - Grid Tie with Backup',
+      supplier: 'Greenworks Solar',
+      status: 'Shipped out',
+      totalCost: '$ 57,178',
+    },
+    {
+      submissionDate: '11/29/2022',
+      purchaseOrderNumber: 'LUM20221129',
+      projectName: '120 Yonge Street - Grid Tie with Backup',
+      supplier: 'XYZ Solar',
+      status: 'Pending Fulfillment',
+      totalCost: '$ 65,255',
+    }
+  ]);
   const [latitude, setLatitude] = useState(35.396120);
   const [longitude, setLongitude] = useState(-118.973590);
 
@@ -435,6 +463,16 @@ const App = () => {
       setBillOfMaterials({ [name]: tableData });
     }
   }
+
+  // Get purchase order data and add action icons to it
+  const getPurchaseOrders = () => {
+    let purchasesData = purchaseOrderData;
+    for (let i = 0; i < purchasesData.length; i++) {
+      purchasesData[i].actions = <div><button className='inline_block action_btn'><EmailIcon  /></button><button className='action_btn'><DownloadIcon /></button></div>
+    }
+
+    setPurchaseOrderData(purchasesData);
+  }
   
   return (
     <Suspense fallback="loading">
@@ -472,6 +510,7 @@ const App = () => {
               <Route path="/dashboard/products/existing" element={<SupplierProducts productData={productData} />}></Route>
               <Route path="/dashboard/products/update" element={<UpdateSupplierProducts />}></Route>
               <Route path="/dashboard/products/update/success" element={<UploadProductSuccess />}></Route>
+              <Route path="/dashboard/purchases/in-process" element={<Purchases purchaseOrderData={purchaseOrderData} getPurchaseOrders={getPurchaseOrders}/>}></Route>
             </Routes>
             
             <Footer />
