@@ -49,17 +49,13 @@ export const Login = (props) => {
         })
         
       props.onUserLogin();
+
       navigate("/dashboard");
       toast.success("Login successful!", {
         id: 'login_success'
       });
 
     }
-    // else if (props.userData.role !== 'designer') {
-    //   toast.error('Access Denied: This feature requires a designer account', {
-    //     id: 'access_denied'
-    //   });
-    // }
     else {
       toast.error('Incorrect password', {
         id: 'incorrect_password'

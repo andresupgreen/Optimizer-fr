@@ -1,54 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import search_icon from '../assets/search-icon.png';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 import { TablePagination } from 'react-pagination-table';
 
 import './dashboard.css';
 import { SideMenu } from './SideMenu';
 
-export const Dashboard = (props) => {
-
+export const Purchases = (props) => {
   const [search, setSearch] = useState('');
   const [selectedStage, setSelectedStage] = useState('');
   const { t } = useTranslation();
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    props.getPurchaseOrders();
+  }, []);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
   }
 
-  const handleStageFilter = (event) => {
+  const handleStatusFilter = (event) => {
     setSelectedStage(event.target.value);
   }
 
   // Filter table data based on project or stage
-  let filterProjectTable = item =>
-    item.projectName
+  let filterPurchaseOrderTable = item =>
+    (item.projectName
       .toLowerCase()
       .match(search.toLowerCase()) &&
-    item.stage
+    item.status
       .toLowerCase()
-      .match(selectedStage);
+      .match(selectedStage)) || 
+    (item.purchaseOrderNumber
+      .toLowerCase()
+      .match(search.toLowerCase()) &&
+    item.status
+      .toLowerCase()
+      .match(selectedStage));
 
   if (selectedStage === 'any' && search !== '') {
-    filterProjectTable = item => item.projectName.toLowerCase().match(search.toLowerCase());
+    filterPurchaseOrderTable = item => item.projectName.toLowerCase().match(search.toLowerCase());
   }
 
-  let filteredProjects = props.projectData.filter(filterProjectTable);
+  let filteredPurchaseOrders = props.purchaseOrderData.filter(filterPurchaseOrderTable);
 
   // Reset table filter on selecting default value
   if (selectedStage === 'any' && search === '') {
-    filteredProjects = props.projectData;
-  }
-
-  // Redirect to create project page
-  const createProject = () => {
-    navigate("/dashboard/create-project");
+    filteredPurchaseOrders = props.purchaseOrderData;
   }
   
   return (
@@ -61,36 +64,32 @@ export const Dashboard = (props) => {
         <Col md={10} id='dashboard_table'>
           <Row>
             <Col id='search_section'>
-              <input id='search_dashboard' type='text' placeholder={t('search_projects')} onChange={handleSearch} />
+              <input id='search_dashboard' type='text' placeholder='Search by PO number or project name' onChange={handleSearch} />
               <button type='submit' id='search_btn_dashboard'><img src={search_icon} id='search_img' alt='magnifying glass'></img></button>         
             </Col>
             <Col id='filter_section'>
-              <label className='inline_block' id='stage_label'>Stage</label>
-              <select name='stages' id='stages' defaultValue='any' onChange={handleStageFilter}>
+              <label className='inline_block' id='stage_label'>Status</label>
+              <select name='status' id='stages' defaultValue='any' onChange={handleStatusFilter}>
                 <option value='any'>Any</option>
-                <option value='new'>New</option>
-                <option value='offered'>Offered</option>
-                <option value='planning'>Planning</option>
-                <option value='design'>Design</option>
-                <option value='procurement'>Procurement</option>
-                <option value='commissioned'>Commissioned</option>
-                <option value='lost'>Lost</option>
-                <option value='postponed'>Postponed</option>
+                <option value='sent'>Sent</option>
+                <option value='pending'>Pending Fulfillment</option>
+                <option value='backorder'>Backorder</option>
+                <option value='shipped out'>Shipped out</option>
+                <option value='delivered'>Delivered</option>
+                <option value='billed'>Billed</option>
               </select>
             </Col>
           </Row>
 
           <TablePagination
-            headers={ [t('type'), t('project_name'), t('address'), t('contact'), t('stage'), t('actions')] }
-            data={ filteredProjects }
-            columns="projectType.projectName.address.contactName.stage.actions"
+            headers={ ['Submission Date', 'PO Number', 'Project Name', 'Supplier', 'Status', 'Total Cost', 'Actions'] }
+            data={ filteredPurchaseOrders }
+            columns="submissionDate.purchaseOrderNumber.projectName.supplier.status.totalCost.actions"
             perPageItemCount={ 5 }
-            totalCount={ filteredProjects.length }
+            totalCount={ filteredPurchaseOrders.length }
             nextPageText={<ArrowForwardIcon />}
             prePageText={<ArrowBackIcon />}
           />
-
-          <button id='create_project_btn' onClick={createProject}><AddCircleIcon id='add_icon' />{t('create_new_project')}</button>
         </Col>
       
       </Row>

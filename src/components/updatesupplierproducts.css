@@ -1,0 +1,25 @@
+.nav_subtitle {
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+
+#upload_products_btn {
+    background-color: #5cf0aa;
+    border: none;
+    padding: 3% 10%;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#download_template_btn {
+    border-radius: 5px;
+    border: 0.5px solid black;
+    width: fit-content;
+    padding: 0.5% 1%;
+    margin-left: 5px;
+}
+
+#upload_pricelist_btn {
+    width: fit-content;
+}

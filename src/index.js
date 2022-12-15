@@ -16,22 +16,56 @@ import duplicate_icon from './assets/duplicate-icon.png';
 import design_icon from './assets/design-icon.png';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import DownloadIcon from '@mui/icons-material/Download';
 
 import './index.css';
 import './i18n';
 import { RegistrationMessage } from './components/RegistrationMessage';
+import { SupplierDashboard } from './components/SupplierDashboard';
+import { SupplierProducts } from './components/SupplierProducts';
+import { UpdateSupplierProducts } from './components/UpdateSupplierProducts';
+import { UploadProductSuccess } from './components/UploadProductSuccess';
+import { Purchases } from './components/Purchases';
 
 export const ManageContext = createContext();
 
 const App = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [companyName, setCompanyName] = useState('');
+  const [businessNumber, setBusinessNumber] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [projectData,setProjectData] = useState({});
+  const [projectData,setProjectData] = useState([]);
+  const [productData, setProductData] = useState([]);
+  const [purchaseOrderData, setPurchaseOrderData] = useState([
+    {
+      submissionDate: '08/20/2022',
+      purchaseOrderNumber: 'LUM20220820',
+      projectName: '1235 Jane Ave - Grid Tie with Backup',
+      supplier: 'Solar Supplier ABC',
+      status: 'Delivered',
+      totalCost: '$ 38,408',
+    },
+    {
+      submissionDate: '04/14/2022',
+      purchaseOrderNumber: 'LUM20220414',
+      projectName: '4800 Yonge Street - Grid Tie with Backup',
+      supplier: 'Greenworks Solar',
+      status: 'Shipped out',
+      totalCost: '$ 57,178',
+    },
+    {
+      submissionDate: '11/29/2022',
+      purchaseOrderNumber: 'LUM20221129',
+      projectName: '120 Yonge Street - Grid Tie with Backup',
+      supplier: 'XYZ Solar',
+      status: 'Pending Fulfillment',
+      totalCost: '$ 65,255',
+    }
+  ]);
   const [latitude, setLatitude] = useState(35.396120);
   const [longitude, setLongitude] = useState(-118.973590);
 
@@ -50,6 +84,39 @@ const App = () => {
   // Set company name on registration
   const handleRegistrationCompanyName = (event) => {
     setRegistrationCompanyName(event.target.value);
+  }
+
+  // Fetch product data of supplier
+  const getProducts = async () => {
+    const response = await fetch(`/api/v1/products/${businessNumber}`);
+    const data = await response.json();
+
+    const warehouseResponse = await fetch(`/api/v1/warehouses/${businessNumber}`);
+    const warehouseData = await warehouseResponse.json();
+  
+    // Store warehouse id/name pair
+    let warehouseObj = {};
+    for (let i = 0; i < warehouseData.length; i++) {
+      warehouseObj[warehouseData[i].warehouseId] = warehouseData[i].warehouseName;
+    }
+
+    for (let i = 0; i < data.length; i++) {
+      const moduleResponse = await fetch(`/api/v1/modules/${data[i].mpn}`);
+      const moduleData = await moduleResponse.json();
+      let mpn = moduleData.mpn;
+
+      // Replace warehouse id in products data with warehouse name
+      data[i].warehouseId = warehouseObj[data[i].warehouseId];
+
+      data[i].price = '$' + (data[i].price).toFixed(2);
+
+      // Replace module id with product mpn
+      data[i].mpn = mpn;
+
+      data[i].actions = <button className='more_info_btn'>More info</button>;
+    }
+
+    setProductData(data);
   }
 
   // Handle basic project information
@@ -211,10 +278,24 @@ const App = () => {
     fetchData();
     setFirstName(userData.firstName);
     setLastName(userData.lastName);
-    setCompanyName(userData.companyName);
-  }, [email, userData.firstName, userData.lastName, userData.companyName]);
+    setBusinessNumber(userData.businessNumber);
+  }, [email, userData.firstName, userData.lastName, userData.businessNumber]);
 
-  // Get project data from backend
+  // Get company name of user
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/api/v1/companies/${businessNumber}`);
+        const data = await response.json();
+        setCompanyName(data.companyName);
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  }, [businessNumber]);
+
+  // Get project data from database
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -235,7 +316,13 @@ const App = () => {
     for (let i = 0; i < listOfProjects.length; i++) {
       listOfProjects[i].contactName = <div className='contact_section'><p className='contact_name'>{listOfProjects[i].contactName}</p><PhoneIcon className='phone_icon'/><EmailIcon className='email_icon'/></div>
       
-      listOfProjects[i].actions = <div><img src={duplicate_icon} className='action_icons' alt='copy icon' /><img src={design_icon} className='action_icons' alt='drawing icon' /><button className='delete_btn'>Delete</button></div>
+      if (userData.creationRights === 'TRUE') {
+        listOfProjects[i].actions = <div><img src={duplicate_icon} className='action_icons' alt='copy icon' /><img src={design_icon} className='action_icons' alt='drawing icon' /><button className='delete_btn'>Delete</button></div>
+      }
+      if (userData.creationRights === 'FALSE') {
+        listOfProjects[i].actions = <div><button className='more_info_btn'>More info</button></div>       
+      }
+
     }
     setProjectData(listOfProjects);
   }
@@ -251,8 +338,7 @@ const App = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(projectInformation)
     };
-    const response = await fetch('/api/v1/projects', requestOptions);
-    const data = response;
+    await fetch('/api/v1/projects', requestOptions);
 
     projectInformation.contactName = <div className='contact_section'><p className='contact_name'>{basicProjectInfo.projectContact}</p><PhoneIcon className='phone_icon'/><EmailIcon className='email_icon'/></div>
     
@@ -268,6 +354,8 @@ const App = () => {
 
     setProjectData(listOfProjects);
   }
+
+  // Get company product information from database
 
   const onUserLogout = () => {
     setIsLoggedIn(false);
@@ -350,6 +438,7 @@ const App = () => {
     }
   );
 
+  // Update quantity of product to customize purchase order
   const updateQuantity = (event, id) => {
     const { name, value } = event.target;
     let tableData = billOfMaterials[name];
@@ -362,6 +451,7 @@ const App = () => {
     setBillOfMaterials({ [name]: tableData });
   }
 
+  // Delete product from selected design to customize purchase order
   const deleteProduct = (event, id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       let name = event.currentTarget.id;
@@ -372,6 +462,16 @@ const App = () => {
 
       setBillOfMaterials({ [name]: tableData });
     }
+  }
+
+  // Get purchase order data and add action icons to it
+  const getPurchaseOrders = () => {
+    let purchasesData = purchaseOrderData;
+    for (let i = 0; i < purchasesData.length; i++) {
+      purchasesData[i].actions = <div><button className='inline_block action_btn'><EmailIcon  /></button><button className='action_btn'><DownloadIcon /></button></div>
+    }
+
+    setPurchaseOrderData(purchasesData);
   }
   
   return (
@@ -389,7 +489,7 @@ const App = () => {
         }}
       />
       <Router>
-        <ManageContext.Provider value={{ latitude, longitude, onSearchLocation, projectLocation, addNewProject, gridType, handleNoGrid, handleLowVoltage, handleMediumVoltage, updateLastTableElement, optimizationType, handleROI, handleLCOE, handleInvestment, handleOffset, handleBasicProjectInfo, basicProjectInfo, handleAdvancedProjectInfo, advancedProjectInfo, handleOptimizationParameters, optimizationParameters, handleElectricalLoadInfo, electricalLoadInfo, handleEnergyRatesInfo, energyRatesInfo, accountType, setUserType, registrationCompanyName, handleRegistrationCompanyName, tags, handleAddition, handleDelete, handleDrag, billOfMaterials, updateQuantity, deleteProduct }}>
+        <ManageContext.Provider value={{ userData, companyName, latitude, longitude, onSearchLocation, projectLocation, addNewProject, gridType, handleNoGrid, handleLowVoltage, handleMediumVoltage, updateLastTableElement, optimizationType, handleROI, handleLCOE, handleInvestment, handleOffset, handleBasicProjectInfo, basicProjectInfo, handleAdvancedProjectInfo, advancedProjectInfo, handleOptimizationParameters, optimizationParameters, handleElectricalLoadInfo, electricalLoadInfo, handleEnergyRatesInfo, energyRatesInfo, accountType, setUserType, registrationCompanyName, handleRegistrationCompanyName, tags, handleAddition, handleDelete, handleDrag, billOfMaterials, updateQuantity, deleteProduct }}>
           <div className='App'>
             <Header isLoggedIn={isLoggedIn} onUserLogout={onUserLogout} firstName={firstName} lastName={lastName} userData={userData}/>
             
@@ -399,9 +499,18 @@ const App = () => {
               <Route path="/register-designer" element={<CreateDesignerAccount />} />
               <Route path="/register-supplier" element={<CreateSupplierAccount />} />
               <Route path="/register/success" element={<RegistrationMessage />} />
-              <Route path="/dashboard" element={<Dashboard companyName={companyName} projectData={projectData} userData={userData}/>} />
+              {userData.creationRights === 'TRUE' &&
+                <Route path="/dashboard" element={<Dashboard projectData={projectData} userData={userData}/>} />
+              }
+              {userData.creationRights === 'FALSE' &&
+                <Route path="/dashboard" element={<SupplierDashboard projectData={projectData} getProducts={getProducts}/>} />
+              }
               <Route path="/dashboard/create-project" element={<CreateProject />} />
               <Route path="/dashboard/create-project/success" element={<SuccessMessage />}></Route>
+              <Route path="/dashboard/products/existing" element={<SupplierProducts productData={productData} />}></Route>
+              <Route path="/dashboard/products/update" element={<UpdateSupplierProducts />}></Route>
+              <Route path="/dashboard/products/update/success" element={<UploadProductSuccess />}></Route>
+              <Route path="/dashboard/purchases/in-process" element={<Purchases purchaseOrderData={purchaseOrderData} getPurchaseOrders={getPurchaseOrders}/>}></Route>
             </Routes>
             
             <Footer />
